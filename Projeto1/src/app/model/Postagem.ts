@@ -1,7 +1,6 @@
 import { Tema } from "./Tema";
 import { User } from "./User";
-import {User} from './User';
-import {Tema} from './Tema';
+
 export class Postagem{
   public id : number;
   public titulo : string;
