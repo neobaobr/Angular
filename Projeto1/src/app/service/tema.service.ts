@@ -28,6 +28,10 @@ return this.http.post<Tema>('http://localhost:8080/tema',tema,this.token)
 
   }
 
+  getByNomeTema(nome : string ): Observable<Tema[]>{
+    return this.http.get<Tema[]>(`http://localhost:8080/tema/nome/${nome}`,this.token)
+  }
+
 putTema(tema: Tema):Observable<Tema>{
   return this.http.put<Tema>('http://localhost:8080/tema',tema,this.token)
 }
