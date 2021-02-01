@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/model/User';
+import { AlertasService } from 'src/app/service/alertas.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { environment } from 'src/environments/environment.prod';
 
@@ -18,7 +19,7 @@ tipoUsuario : string
 
   constructor(private authService : AuthService,
     private router : Router,
-    private route : ActivatedRoute) { }
+    private route : ActivatedRoute, private alertas : AlertasService) { }
 
   ngOnInit(){
     window.scroll(0,0)
@@ -40,12 +41,12 @@ tipoUsuario : string
   atualizar(){
     this.user.tipo = this.tipoUsuario
     if(this.user.senha != this.confirmarSenha){
-alert('As senhas estao incorretas.')
+this.alertas.showAlertDanger('As senhas estao incorretas.')
     }else{
 this.authService.cadastrar(this.user).subscribe((resp:User) => {
   this.user= resp 
   this.router.navigate(['/inicio'])
-  alert('Usuario atualizado com sucesso, refaca o login para atualizar suas informacoes ! ')})
+  this.alertas.showAlertSuccess('Usuario atualizado com sucesso, refaca o login para atualizar suas informacoes ! ')})
   environment.token=''
   environment.nome= ''
   environment.foto = ''

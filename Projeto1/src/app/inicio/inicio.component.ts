@@ -8,6 +8,7 @@ import { Tema } from '../model/Tema';
 import { User } from '../model/User';
 import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface';
 import { AuthService } from '../service/auth.service';
+import { AlertasService } from '../service/alertas.service';
 
 
 @Component({
@@ -26,7 +27,11 @@ user: User = new User()
 idUser = environment.id
 idTema : number
 
-  constructor(private router: Router , private postageService : PostagemService, private temaService : TemaService, private authService :  AuthService) { }
+key = 'data'
+reverse = true
+
+  constructor(private router: Router , private postagemService : PostagemService, private temaService : TemaService, private authService :  AuthService,
+    private alertas : AlertasService) { }
 
   ngOnInit() {
     if(environment.token==''){
@@ -52,7 +57,7 @@ this.temaService.getByIdTema(this.idTema).subscribe((resp: Tema)=>{
   }
 
 getAllPostagens(){
-  this.postageService.getAllPostagens().subscribe((resp: Postagem[])=>
+  this.postagemService.getAllPostagens().subscribe((resp: Postagem[])=>
   {
     this.listaPostagens= resp
   })
@@ -72,9 +77,9 @@ this.postagem.tema = this.tema
 this.user.id = this.idUser
 this.postagem.usuario = this.user
 
-this.postageService.postPostagem(this.postagem).subscribe((resp : Postagem)=>{
+this.postagemService.postPostagem(this.postagem).subscribe((resp : Postagem)=>{
   this.postagem = resp
-  alert('Postagem realizada com sucesso!!')
+  this.alertas.showAlertSuccess('Postagem realizada com sucesso!!')
   this.postagem = new Postagem()
   this.getAllPostagens()
 })
