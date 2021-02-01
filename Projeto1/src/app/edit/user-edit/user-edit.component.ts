@@ -31,14 +31,12 @@ tipoUsuario : string
   }
 
 
-  tipoUser(event: any){
-
-  }
-
-  confirmSenha(event:any){
-
-  }
-
+  confirmSenha(event: any){
+    this.confirmarSenha = event.target.value
+    }
+    tipoUser(event: any){
+      this.tipoUsuario = event.target.value
+    }
   atualizar(){
     this.user.tipo = this.tipoUsuario
     if(this.user.senha != this.confirmarSenha){
@@ -46,8 +44,13 @@ alert('As senhas estao incorretas.')
     }else{
 this.authService.cadastrar(this.user).subscribe((resp:User) => {
   this.user= resp 
+  this.router.navigate(['/inicio'])
+  alert('Usuario atualizado com sucesso, refaca o login para atualizar suas informacoes ! ')})
+  environment.token=''
+  environment.nome= ''
+  environment.foto = ''
+  environment.id = 0
   this.router.navigate(['/entrar'])
-  alert('Usuario atualizado com sucesso ')})
   }
 }
 
